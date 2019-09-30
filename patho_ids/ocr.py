@@ -6,7 +6,6 @@ import pathlib
 import sys
 from google.cloud import vision
 from google.protobuf import json_format
-import cv2 as cv
 
 client = vision.ImageAnnotatorClient()
 
