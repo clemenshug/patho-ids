@@ -38,10 +38,10 @@ def main(argv=None):
         help="Path to output file in which extracted texts from all images will be written",
     )
     args = parser.parse_args(argv)
-    img_not_found = [not p.exists() for p in args.images]
-    img_names = [p.stem for p in args.images]
-    if any(img_not_found):
+    img_not_found = [p for p in args.images if not p.exists()]
+    if len(img_not_found) > 0:
         raise ValueError("Images not found:", "\n".join(img_not_found))
+    img_names = [p.stem for p in args.images]
     res = [ocr_image(p) for p in args.images]
     res_dict = {n: json_format.MessageToDict(r) for n, r in zip(img_names, res)}
     with args.output.with_suffix(".json").open("w") as f:
